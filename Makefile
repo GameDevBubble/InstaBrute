@@ -13,6 +13,7 @@ OBJS = $(SRCS:.cpp=.o)
 all: $(TARGET)
 
 $(TARGET): $(OBJS)
+	@if [ ! -d "$(OUTPUT_DIR)" ]; then mkdir -p $(OUTPUT_DIR); fi
 	$(CXX) $(CXXFLAGS) -o $(OUTPUT_DIR)/$@ $^
 
 .cpp.o:

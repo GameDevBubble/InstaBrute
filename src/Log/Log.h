@@ -38,6 +38,7 @@ namespace Log {
         }
     }
 
+
     void Log(LogLevel level, const std::string& message, bool writeToLogFile = true, bool showTimestamp = false) {
         std::string LogLevelString;
         std::string LogLevelColorCode;

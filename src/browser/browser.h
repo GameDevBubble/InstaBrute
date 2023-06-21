@@ -7,7 +7,6 @@
 
 #include <iostream>
 #include "../Log/Log.h"
-#include <boost/asio.hpp>
 #include <cstdlib>
 
 extern bool Debug;

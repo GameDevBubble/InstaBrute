@@ -4,13 +4,13 @@
 
 #include <iostream>
 #include <vector>
-#include <bits/stdc++.h>
-#include <cstdio>
+#include <chrono>
+#include <fstream>
 
 using namespace std;
 using namespace std::chrono;
 
-//values in decimal
+// Values in decimal
 int first = 32, last = 126, characters = 13, hashval = 1207;
 
 vector<vector<int>> combinations;
@@ -21,15 +21,16 @@ vector<vector<int>> combinations;
 namespace BruteForce {
 
     class BruteForce {
-        void brute(int n, int it, vector<int> values) {
+    private:
+        void brute(int n, int it, vector<int>& values) {
             if (n == 0) {
                 int sum = 0;
 
-                //sum up recent values
+                // Sum up recent values
                 for (int j = 0; j < characters; ++j) {
                     sum += values[j];
                 }
-                //save values if matching to hash
+                // Save values if matching to hash
                 if (sum == hashval) {
                     combinations.push_back(values);
                 }
@@ -41,21 +42,31 @@ namespace BruteForce {
             }
         }
 
+    public:
+        void generateCombinations() {
+            vector<int> values(characters);
+            brute(characters, 0, values);
+        }
 
-        void printToFile(){
-            freopen("fileContent.brute", "w", stdout);
-            cout << "\n\nFound " << combinations.size() << " combinations." << endl;
-            int counter = 0;
-            for (auto combo = combinations.begin(); combo != combinations.end(); ++combo){
-                for (int i = 0; i <  characters; ++i) {
-                    cout << (char) combinations.at(counter).at(i) << " ";
-                }
-                cout<< "\r\n";
-                counter++;
+        void printToFile() {
+            ofstream outputFile("fileContent.brute");
+            if (!outputFile) {
+                cerr << "Failed to open output file." << endl;
+                return;
             }
+            
+            outputFile << "\n\nFound " << combinations.size() << " combinations." << endl;
+            for (const auto& combo : combinations) {
+                for (int i = 0; i < characters; ++i) {
+                    outputFile << static_cast<char>(combo[i]) << " ";
+                }
+                outputFile << "\r\n";
+            }
+
+            outputFile.close();
         }
     };
 
-} // BruteForce
+} 
 
-#endif //INSTABRUTE_BRUTEFORCE_H
+#endif // INSTABRUTE_BRUTEFORCE_H
